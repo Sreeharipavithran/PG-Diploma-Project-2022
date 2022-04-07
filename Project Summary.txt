@@ -1,0 +1,10 @@
+First of all Collected the Data 'Flaship 2020-22' from various Sources such as Gadget360, GSMArena, 91mobiles then done feature engineering on that data 
+using python in Google.Colab using some plotting and functions, found the highly correlated features of devices with the price. And then made ML model to 
+predict the Price. After creating the ML Model using Voting Regressor exported the Model and data using Pickle Library and added the files in Pycharm to 
+form an open web page using package called streamlit. After designed and created the web page I made a survey using Google Form to find out the most 
+relevent features that a user need in Flagship devices. After getting enough records for survey I made a code in Python to findout the countplots for each 
+features mentioned in survey. In this project I have to find out the best Gaming and Non-gaming flagship devices so, after finding most selected features 
+for each category, I put those features in the web page, that created earlier, and change the name of brand each time and predict the price of each brand 
+with the ideal features that I found. After getting the price details of all the ideal devices, compared it with the existing products using Tableau. From 
+that I did find products which have more than 60% features that are comparable to the predicted ideal devices. Finally made an interactive DashBoard on 
+Tableau for those Selected Best Flagship devices in both category.
