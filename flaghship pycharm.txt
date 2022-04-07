@@ -1,0 +1,112 @@
+import streamlit as st
+import pickle
+import numpy as np
+
+pipe = pickle.load(open("pipe.pkl", "rb"))
+vd = pickle.load(open("vd.pkl", "rb"))
+
+st.title("Ideal Flagship Smartphone")
+
+# brand
+Brand = st.selectbox('Brand', vd['Brand'].unique())
+
+# Category
+Category = st.selectbox('Category', vd['Category'].unique())
+
+# screen size
+Screensize = st.selectbox('Screen Size(inch)',[5.4,5.8,5,9,6,6.1,6.2,6.3,6.44,6.55,6.67,6.7,6.8,7.2,7.8,8,8.2])
+
+# screen size
+ScreenResolution = st.selectbox('Screen Resolution', vd['Screen Resolution'].unique())
+
+# DisplayType
+DisplayType = st.selectbox('Display Type', vd['Display Type'].unique())
+
+# DisplayDimension
+DisplayDimension = st.selectbox('Display Dimension', vd['Display Dimension'].unique())
+
+# RefreshRate
+RefreshRate = st.selectbox('Refresh Rate(Hz)', vd['Refresh Rate(Hz)'].unique())
+
+# TouchSampleRate
+TouchSampleRate = st.selectbox('Touch Sample Rate(Hz)', [180,240,300,360,480,600,1000])
+
+# VariableRefreshRate
+VariableRefreshRate = st.selectbox('Variable Refresh Rate', vd['Variable Refresh Rate'].unique())
+
+# ProcessorBrand
+ProcessorBrand = st.selectbox('Processor Brand', vd['Processor Brand'].unique())
+
+# Chipset
+Chipset = st.selectbox('Chipset', vd['Chipset'].unique())
+
+# ChipSize
+ChipSize = st.selectbox('Chip Architecture Size(nm)', [7,6,5,4])
+
+# RAM
+RAM = st.selectbox('RAM(GB)', [4,6,8,12,16])
+
+# InternalStorage
+InternalStorage = st.selectbox('Internal Storage(GB)', [64,128,256,512])
+
+# RearPrimaryCamera
+RearPrimaryCamera = st.selectbox('Rear Primary Camera(MP)', [12,48,50,64,108])
+
+# RearSecondaryCamera
+RearSecondaryCamera = st.selectbox('Rear Secondary Camera(MP)', [0,5,8,10,12,13,16,20,24,32,48,50,64,])
+
+# RearTertiaryCamera
+RearTertiaryCamera = st.selectbox('Rear Tertiary Camera(MP)', [0,5,8,10,12,16,20,24,32,48,50,64])
+
+# RearQuaternaryCamera
+RearQuaternaryCamera = st.selectbox('Rear Quaternary Camera(MP)', [0,5,8,10,12,16,20,24,32,48,50,64])
+
+# CameraSensorBy
+CameraSensorBy = st.selectbox('Camera Sensor By', vd['Camera Sensor By'].unique())
+
+# CameraTuningBy
+CameraTuningBy = st.selectbox('Camera Tuning By', vd['Camera Tuning By'].unique())
+
+# Battery
+Battery = st.number_input('Battery (mAh)')
+
+# WiredCharger
+WiredCharger = st.selectbox('Wired Charger(w)', [5,10,15,20,25,30,33,40,45,50,55,65,66,
+                                                 67,80,90,100,120,125,])
+
+# WirelessCharging
+WirelessCharging = st.selectbox('Wireless Charging(w)', [0,12,15,20,25,30,40,45,50,55,65,66,80,90])
+
+# SecuritySensor
+SecuritySensor = st.selectbox('Security sensor', vd['Security sensor'].unique())
+
+# BackBody
+BackBody = st.selectbox('Back Body', vd['Back Body'].unique())
+
+# Chassis
+Chassis = st.selectbox('Chassis', vd['Chasis'].unique())
+
+# Thickness
+Thickness = st.number_input('Thickness(mm)')
+
+
+# Weight
+Weight = st.number_input('Weight(gm)')
+
+if st.button('Predict Product Price'):
+    X_res = int(ScreenResolution.split('x')[0])
+    Y_res = int(ScreenResolution.split('x')[1])
+    PPI = ((X_res**2) + (Y_res**2))**0.5/Screensize
+    query = np.array([Category,WirelessCharging,Weight,SecuritySensor,Brand,Screensize,
+                      DisplayType,VariableRefreshRate,ProcessorBrand,Chipset,ChipSize,
+                      RAM,InternalStorage,RearSecondaryCamera,RearTertiaryCamera,
+                      CameraSensorBy,CameraTuningBy,BackBody,Chassis,Thickness,PPI])
+    query = query.reshape(1,21)
+    st.title(int(np.exp(pipe.predict(query))))
+
+
+
+
+# my website
+
+http://localhost:8501
